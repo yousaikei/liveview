@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Monitoring</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <div class="menu-button" onclick="toggleMenu()">☰</div>
+        <div class="dropdown">
+            <select id="shop-select">
+                <option value="A">A 店</option>
+                <option value="B">B 店</option>
+                <!-- 可以添加更多店铺 -->
+            </select>
+        </div>
+        <div class="countdown" id="countdown">倒计时: 00:00</div>
+        <div class="current-directory" id="current-directory">当前目录</div>
+    </nav>
+    <div class="menu" id="menu">
+        <button>青果</button>
+        <button>鮮魚・寿司</button>
+        <button>精肉</button>
+        <button>惣菜</button>
+        <button>酒・飲料</button>
+        <button>グロサリー</button>
+        <button>衣料用品</button>
+        <button>生活消耗品</button>
+        <button>台所用品</button>
+        <button>メンズビューティ</button>
+        <button>季節雑貨</button>
+        <button>加工肉</button>
+        <button>冷凍食品</button>
+        <button>洋日配</button>
+        <button>和日配</button>
+        <button>事務所</button>
+        <button>決済エリア</button>
+        <button>菓子</button>
+        <button>ハード</button>
+        <button>米</button>
+        <!-- 继续添加更多目录 -->
+        <button>退出登录</button>
+    </div>
+    <main id="main-content">
+        <!-- 图片将被动态插入 -->
+    </main>
+    <script>
+function toggleMenu() {
+    const menu = document.getElementById('menu');
+    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+}
+
+function startCountdown(duration, display) {
+    let timer = duration, minutes, seconds;
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = "倒计时: " + minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            timer = duration;
+        }
+    }, 1000);
+}
+
+window.onload = function () {
+    const countdown = document.getElementById('countdown');
+    startCountdown(60 * 5, countdown); // 5分钟倒计时
+
+    // 示例图片列表，可以动态生成
+    const images = [
+        'img1.jpg',
+        'img2.jpg',
+        'img3.jpg',
+        'img4.jpg',
+        'img5.jpg',
+        'img6.jpg',
+        'img7.jpg',
+    ];
+
+    const mainContent = document.getElementById('main-content');
+    images.forEach(src => {
+        const img = document.createElement('img');
+        img.src = src;
+        mainContent.appendChild(img);
+    });
+
+    // 图片轮播功能
+    let currentIndex = 0;
+    const displayTime = 5000; // 每张图片显示时间（毫秒）
+    setInterval(() => {
+        const imgs = document.querySelectorAll('#main-content img');
+        imgs.forEach((img, index) => {
+            img.style.display = index === currentIndex ? 'block' : 'none';
+        });
+        currentIndex = (currentIndex + 1) % imgs.length;
+    }, displayTime);
+};
+
+    </script>
+</body>
+</html>
