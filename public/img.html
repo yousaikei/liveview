@@ -7,18 +7,23 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+ <!-- 导航栏 -->
     <nav>
         <div class="menu-button" onclick="toggleMenu()">☰</div>
         <div class="dropdown">
             <select id="shop-select">
-                <option value="A">A 店</option>
-                <option value="B">B 店</option>
+                <option value="A">脇田</option>
+                <option value="B">水巻</option>
+                <option value="C">大野城まどかぴあ前</option>
+                <option value="D">麦野</option>
+                <option value="E">北九州空港ﾊﾞｲﾊﾟｽ</option>
                 <!-- 可以添加更多店铺 -->
             </select>
         </div>
-        <div class="countdown" id="countdown">倒计时: 00:00</div>
-        <div class="current-directory" id="current-directory">当前目录</div>
+        <div class="countdown" id="countdown">秒読み: 00:00</div>
+        <div class="current-directory" id="current-directory">惣菜</div>
     </nav>
+    <!-- 菜单栏 -->
     <div class="menu" id="menu">
         <button>青果</button>
         <button>鮮魚・寿司</button>
@@ -41,12 +46,30 @@
         <button>ハード</button>
         <button>米</button>
         <!-- 继续添加更多目录 -->
-        <button>退出登录</button>
+        <button id="logout-button" onclick="logout()">Logout</button>
     </div>
+    <!-- 主内容 -->
     <main id="main-content">
         <!-- 图片将被动态插入 -->
     </main>
+    <!-- 脚本 -->
     <script>
+         document.addEventListener('DOMContentLoaded', () => {
+            const menu = document.getElementById('menu');
+            const currentDirectory = document.getElementById('current-directory');
+
+            menu.addEventListener('click', (event) => {
+                if (event.target.tagName === 'BUTTON' && event.target.id !== 'logout-button') {
+                    currentDirectory.textContent = event.target.textContent;
+                }
+            });
+        });
+
+function logout() {
+    window.location.href = 'http://127.0.0.1:8080/index.html';
+   // alert('Logout successful!');
+}
+
 function toggleMenu() {
     const menu = document.getElementById('menu');
     menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
@@ -61,17 +84,17 @@ function startCountdown(duration, display) {
         minutes = minutes < 10 ? "0" + minutes : minutes;
         seconds = seconds < 10 ? "0" + seconds : seconds;
 
-        display.textContent = "倒计时: " + minutes + ":" + seconds;
+        display.textContent = "秒読み: " + minutes + ":" + seconds;
 
         if (--timer < 0) {
             timer = duration;
         }
-    }, 1000);
+    }, 800);
 }
 
 window.onload = function () {
     const countdown = document.getElementById('countdown');
-    startCountdown(60 * 5, countdown); // 5分钟倒计时
+    startCountdown(10, countdown); // 5分钟倒计时
 
     // 示例图片列表，可以动态生成
     const images = [
@@ -93,7 +116,7 @@ window.onload = function () {
 
     // 图片轮播功能
     let currentIndex = 0;
-    const displayTime = 5000; // 每张图片显示时间（毫秒）
+    const displayTime = 10000; // 每张图片显示时间（毫秒）
     setInterval(() => {
         const imgs = document.querySelectorAll('#main-content img');
         imgs.forEach((img, index) => {
@@ -104,5 +127,6 @@ window.onload = function () {
 };
 
     </script>
+
 </body>
 </html>
