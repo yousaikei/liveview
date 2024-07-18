@@ -32,8 +32,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // 安全登录路由
 
-
-
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
  // console.log(req.body);
@@ -60,6 +58,6 @@ setTimeout(() => {
   server.close(() => {
     console.log('Server closed after 30 seconds');
   });
-}, 30000); // 30 seconds
+}, 120000); // 30 seconds
 
 

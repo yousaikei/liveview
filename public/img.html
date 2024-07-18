@@ -25,27 +25,29 @@
     </nav>
     <!-- 菜单栏 -->
     <div class="menu" id="menu">
-        <button>青果</button>
-        <button>鮮魚・寿司</button>
-        <button>精肉</button>
-        <button>惣菜</button>
-        <button>酒・飲料</button>
-        <button>グロサリー</button>
-        <button>衣料用品</button>
-        <button>生活消耗品</button>
-        <button>台所用品</button>
-        <button>メンズビューティ</button>
-        <button>季節雑貨</button>
-        <button>加工肉</button>
-        <button>冷凍食品</button>
-        <button>洋日配</button>
-        <button>和日配</button>
-        <button>事務所</button>
-        <button>決済エリア</button>
-        <button>菓子</button>
-        <button>ハード</button>
-        <button>米</button>
+        <button onclick="showImages('shop1')">青果</button>
+        <button onclick="showImages('shop2')">鮮魚・寿司</button>
+        <button onclick="showImages('shop3')">精肉</button>
+        <button onclick="showImages('shop4')">惣菜</button>
+        <button onclick="showImages('shop5')">酒・飲料</button>
+        <button onclick="showImages('shop6')">グロサリー</button>
+        <button onclick="showImages('shop7')">衣料用品</button>
+        <button onclick="showImages('shop8')">生活消耗品</button>
+        <button onclick="showImages('shop9')">台所用品</button>
+        <button onclick="showImages('shop10')">メンズビューティ</button>
+        <button onclick="showImages('shop11')">季節雑貨</button>
+        <button onclick="showImages('shop12')">加工肉</button>
+        <button onclick="showImages('shop13')">冷凍食品</button>
+        <button onclick="showImages('shop14')">洋日配</button>
+        <button onclick="showImages('shop15')">和日配</button>
+        <button onclick="showImages('shop16')">事務所</button>
+        <button onclick="showImages('shop17')">決済エリア</button>
+        <button onclick="showImages('shop18')">菓子</button>
+        <button onclick="showImages('shop19')">ハード</button>
+        <button onclick="showImages('shop20')">米</button>
+
         <!-- 继续添加更多目录 -->
+
         <button id="logout-button" onclick="logout()">Logout</button>
     </div>
     <!-- 主内容 -->
@@ -54,6 +56,7 @@
     </main>
     <!-- 脚本 -->
     <script>
+        // 将选择目录名显示功能于右上角
          document.addEventListener('DOMContentLoaded', () => {
             const menu = document.getElementById('menu');
             const currentDirectory = document.getElementById('current-directory');
@@ -65,15 +68,165 @@
             });
         });
 
+        const menuData = {
+            shop1: [
+                { url: 'seika1.jpg' },
+                { url: 'seika2.jpg' },
+                { url: 'seika3.jpg' },
+                { url: 'seika4.jpg' },
+                { url: 'seika5.jpg' },
+
+                // 更多图像数据
+            ],
+            shop2: [
+                { url: 'img3.jpg' },
+                { url: 'img4.jpg' },
+                // 更多图像数据
+            ],
+            shop3: [
+                { url: 'img3.jpg' },
+                { url: 'img4.jpg' },
+                { url: 'img2.jpg' },
+                // 更多图像数据
+            ],
+            shop4: [
+                { url: 'img1.jpg' },
+                { url: 'img4.jpg' },
+                // 更多图像数据
+            ],
+            shop5: [
+                { url: 'img3.jpg' },
+                { url: 'img4.jpg' },
+                { url: 'img2.jpg' },
+                { url: 'img1.jpg' },
+                // 更多图像数据
+            ],
+            shop6: [
+                { url: 'img3.jpg' },
+                { url: 'img2.jpg' },
+                { url: 'img1.jpg' },
+                { url: 'img4.jpg' },
+                { url: 'img5.jpg' },
+                
+      
+                // 更多图像数据
+            ],
+            shop7: [
+                { url: 'img3.jpg' },
+                { url: 'img4.jpg' },
+                { url: 'img6.jpg' },
+                { url: 'img5.jpg' },
+                { url: 'img2.jpg' },
+                { url: 'img1.jpg' },
+                // 更多图像数据
+            ],
+            shop8: [
+                { url: 'img3.jpg' },
+                { url: 'img4.jpg' },
+                { url: 'img7.jpg' },
+                { url: 'img6.jpg' },
+                { url: 'img5.jpg' },
+                { url: 'img2.jpg' },
+                { url: 'img1.jpg' },
+                // 更多图像数据
+            ],
+            shop9: [
+                { url: 'img4.jpg' },
+                // 更多图像数据
+            ],
+            shop10: [
+                { url: 'img3.jpg' },
+                { url: 'img4.jpg' },
+                { url: 'img2.jpg' },
+                // 更多图像数据
+            ],
+            shop11: [
+                { url: 'img3.jpg' },
+                { url: 'img4.jpg' },
+                { url: 'img2.jpg' },
+                // 更多图像数据
+            ],
+            shop12: [
+                { url: 'img3.jpg' },
+                { url: 'img4.jpg' },
+                { url: 'img2.jpg' },
+                { url: 'img1.jpg' },
+                { url: 'img5.jpg' },
+                // 更多图像数据
+            ],
+            shop13: [
+                { url: 'img3.jpg' },
+                { url: 'img4.jpg' },
+                { url: 'img2.jpg' },
+                // 更多图像数据
+            ],
+            shop14: [
+                { url: 'img3.jpg' },
+                { url: 'img4.jpg' },
+                { url: 'img2.jpg' },
+                { url: 'img1.jpg' },
+                // 更多图像数据
+            ],
+            shop15: [
+                { url: 'img3.jpg' },
+                { url: 'img4.jpg' },
+                { url: 'img5.jpg' },
+                
+                // 更多图像数据
+            ],
+            shop16: [
+                { url: 'img3.jpg' },
+                { url: 'img4.jpg' },
+                { url: 'img7.jpg' },
+                { url: 'img6.jpg' },
+                { url: 'img5.jpg' },
+                // 更多图像数据
+            ],
+            shop17: [
+                { url: 'img3.jpg' },
+
+                // 更多图像数据
+            ],
+            shop18: [
+                { url: 'img1.jpg' },
+                { url: 'img4.jpg' },
+                // 更多图像数据
+            ],
+            shop19: [
+                { url: 'img2.jpg' },
+                { url: 'img4.jpg' },
+                // 更多图像数据
+            ],
+            shop20: [
+                { url: 'img3.jpg' },
+                { url: 'img4.jpg' },
+                // 更多图像数据
+            ]
+        };
+
+//按下图标显示所对应的图像
+        function showImages(shop) {
+            const container = document.getElementById('main-content');
+            container.innerHTML = ''; // 清空之前的图像
+
+            menuData[shop].forEach(item => {
+                const img = document.createElement('img');
+                img.src = item.url;
+                container.appendChild(img);
+            });
+        }
+
+// 退出按钮功能
 function logout() {
     window.location.href = 'http://127.0.0.1:8080/index.html';
    // alert('Logout successful!');
 }
-
+//菜单栏显示，关闭功能
 function toggleMenu() {
     const menu = document.getElementById('menu');
     menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
 }
+
 
 function startCountdown(duration, display) {
     let timer = duration, minutes, seconds;

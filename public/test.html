@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图像展示</title>
+    <style>
+        .image-container img {
+            width: 100px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="showImages('shop1')">显示店铺1的图像</button>
+    <button onclick="showImages('shop2')">显示店铺2的图像</button>
+
+    <div class="image-container" id="imageContainer"></div>
+
+    <script>
+        const menuData = {
+            shop1: [
+                { url: 'img1.jpg' },
+                { url: 'img2.jpg' },
+                // 更多图像数据
+            ],
+            shop2: [
+                { url: 'img3.jpg' },
+                { url: 'img4.jpg' },
+                // 更多图像数据
+            ]
+            // 更多店铺数据
+        };
+
+        function showImages(shop) {
+            const container = document.getElementById('imageContainer');
+            container.innerHTML = ''; // 清空之前的图像
+
+            menuData[shop].forEach(item => {
+                const img = document.createElement('img');
+                img.src = item.url;
+                container.appendChild(img);
+            });
+        }
+    </script>
+</body>
+</html>
