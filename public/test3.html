@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Button Value Store</title>
+</head>
+<body>
+    <div>
+        <h2>Save Value</h2>
+        <button onclick="saveValue(1)">Button 1</button>
+        <button onclick="saveValue(2)">Button 2</button>
+        <button onclick="saveValue(3)">Button 3</button>
+        <button onclick="saveValue(4)">Button 4</button>
+    </div>
+    <div>
+        <h2>Get Value</h2>
+        <button onclick="getValue()">Get Value</button>
+        <p id="valueDisplay">Value: </p>
+    </div>
+
+    <script>
+        function saveValue(value) {
+            fetch('/api/saveValue', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ value })
+            }).then(response => {
+                if (response.ok) {
+                    alert('Value saved');
+                } else {
+                    alert('Failed to save value');
+                }
+            });
+        }
+
+        function getValue() {
+            fetch('/api/getValue')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('valueDisplay').innerText = 'Value: ' + (data.value !== null ? data.value : 'No value found');
+                });
+        }
+    </script>
+</body>
+</html>

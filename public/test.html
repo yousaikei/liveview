@@ -1,47 +1,46 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>图像展示</title>
+    <title>音声認識のデモ</title>
     <style>
-        .image-container img {
-            width: 100px;
-            margin: 5px;
+        #recognized-text {
+            font-size: 24px;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <button onclick="showImages('shop1')">显示店铺1的图像</button>
-    <button onclick="showImages('shop2')">显示店铺2的图像</button>
-
-    <div class="image-container" id="imageContainer"></div>
+    <h1>音声認識のデモ</h1>
+    <button id="start-recognition">音声認識を開始</button>
+    <div id="recognized-text">認識されたテキストがここに表示されます</div>
 
     <script>
-        const menuData = {
-            shop1: [
-                { url: 'img1.jpg' },
-                { url: 'img2.jpg' },
-                // 更多图像数据
-            ],
-            shop2: [
-                { url: 'img3.jpg' },
-                { url: 'img4.jpg' },
-                // 更多图像数据
-            ]
-            // 更多店铺数据
-        };
+        const startButton = document.getElementById('start-recognition');
+const recognizedText = document.getElementById('recognized-text');
 
-        function showImages(shop) {
-            const container = document.getElementById('imageContainer');
-            container.innerHTML = ''; // 清空之前的图像
+startButton.addEventListener('click', () => {
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.lang = 'ja-JP';
 
-            menuData[shop].forEach(item => {
-                const img = document.createElement('img');
-                img.src = item.url;
-                container.appendChild(img);
-            });
+    recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        recognizedText.textContent = `認識されたテキスト: ${transcript}`;
+    };
+
+    recognition.onerror = (event) => {
+        console.error('認識エラー:', event.error);
+        if (event.error === 'not-allowed') {
+            alert('マイクの使用を許可し、ページをリフレッシュしてください。');
         }
+    };
+
+    recognition.onend = () => {
+        console.log('音声認識が終了しました');
+    };
+
+    recognition.start();
+});
     </script>
 </body>
 </html>

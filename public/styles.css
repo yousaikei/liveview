@@ -62,13 +62,22 @@ nav {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    padding: 20px;
+    align-items: center; /* 垂直居中 */  
+    padding: 2px;
+    width: 100%;
+    height: 600px;
 }
 
 #main-content img {
-    max-width: 200px;
+    float: left;
+    max-width: 30%;
+    height: auto; /* 自动保持比例 */
     margin: 10px;
     border: 1px solid #ccc;
+    transition: transform 1s; /* 添加动画效果 */
+}
+#main-content img:hover {
+    transform: scale(1.15); /* 悬停时放大 */
 }
 #logout-button {
     background-color: #4682b4;
@@ -79,4 +88,25 @@ nav {
 }
 #logout-button:hover {
     background-color: red;
+}
+
+#categories {
+    width: 80%; /* 设置容器的宽度 */
+    margin: 0 auto; /* 使容器在页面中居中 */
+    padding: 10px; /* 添加内边距 */
+    background-color: #f9f9f9; /* 设置背景颜色 */
+    border: 1px solid #ddd; /* 添加边框 */
+    border-radius: 5px; /* 添加圆角 */
+    font-family: Arial, sans-serif; /* 设置字体 */
+    font-size: 14px; /* 设置字体大小 */
+    color: #333; /* 设置字体颜色 */
+}
+
+#categories label {
+    display: block; /* 使每个标签占一行 */
+    margin-bottom: 10px; /* 添加底部间距 */
+}
+
+#categories input[type="checkbox"] {
+    margin-right: 10px; /* 添加复选框和文本之间的间距 */
 }

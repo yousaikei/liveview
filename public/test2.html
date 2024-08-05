@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Monitoring</title>
+  <link rel="stylesheet" href="styles.css">
+  
+</head>
+<body>
+ <!-- 导航栏 -->
+    <nav>
+        <div class="menu-button1" onclick="toggleMenu()">☰</div>
+        <div class="dropdown">
+            <select id="shop-select">
+                <option value="A">脇田</option>
+                <option value="B">水巻</option>
+                <option value="C">大野城まどかぴあ前</option>
+                <option value="D">麦野</option>
+                <option value="E">北九州空港ﾊﾞｲﾊﾟｽ</option>
+                <!-- 可以添加更多店铺 -->
+            </select>
+        </div>
+        <div class="countdown" id="countdown">
+        <select id="shop-select">
+        
+            <option value="A">10秒</option>
+            <option value="A">20秒</option>
+            <option value="A">30秒</option>
+            <!-- 可以添加更多店铺 -->
+        </select>
+    </div>
+        <div class="current-directory" id="current-directory">惣菜</div>
+    </nav>
+    <!-- 菜单栏 -->
+    <div class="menu" id="menu">
+        <button class="menu-button" onclick="showImages('shop1')">青果</button>
+        <button class="menu-button" onclick="showImages('shop2')">鮮魚・寿司</button>
+        <button class="menu-button" onclick="showImages('shop3')">精肉</button>
+        <button class="menu-button" onclick="showImages('shop4')">惣菜</button>
+        <button class="menu-button" onclick="showImages('shop5')">酒・飲料</button>
+        <button class="menu-button" onclick="showImages('shop6')">グロサリー</button>
+        <button class="menu-button" onclick="showImages('shop7')">衣料用品</button>
+        <button class="menu-button" onclick="showImages('shop8')">生活消耗品</button>
+        <button class="menu-button" onclick="showImages('shop9')">台所用品</button>
+        <button class="menu-button" onclick="showImages('shop10')">メンズビューティ</button>
+        <button class="menu-button" onclick="showImages('shop11')">季節雑貨</button>
+        <button class="menu-button" onclick="showImages('shop12')">加工肉</button>
+        <button class="menu-button" onclick="showImages('shop13')">冷凍食品</button>
+        <button class="menu-button" onclick="showImages('shop14')">洋日配</button>
+        <button class="menu-button" onclick="showImages('shop15')">和日配</button>
+        <button class="menu-button" onclick="showImages('shop16')">事務所</button>
+        <button class="menu-button" onclick="showImages('shop17')">決済エリア</button>
+        <button class="menu-button" onclick="showImages('shop18')">菓子</button>
+        <button class="menu-button" onclick="showImages('shop19')">ハード</button>
+        <button class="menu-button" onclick="showImages('shop20')">米</button>
+
+        <!-- 继续添加更多目录 -->
+        <h5>Checkboxes</h5>
+        <div id="categories">
+            <label><input type="checkbox" value="青果">青果</label>
+            <label><input type="checkbox" value="鮮魚・寿司">鮮魚・寿司</label>
+            <label><input type="checkbox" value="精肉">精肉</label>
+            <label><input type="checkbox" value="惣菜">惣菜</label>
+            <label><input type="checkbox" value="酒・飲料">酒・飲料</label>
+            <label><input type="checkbox" value="グロサリー">グロサリー</label>
+            <label><input type="checkbox" value="衣料用品">衣料用品</label>
+            <label><input type="checkbox" value="生活消耗品">生活消耗品</label>
+            <label><input type="checkbox" value="台所用品">台所用品</label>
+            <label><input type="checkbox" value="メンズビューティ">メンズビューティ</label>
+            <label><input type="checkbox" value="季節雑貨">季節雑貨</label>
+            <label><input type="checkbox" value="加工肉">加工肉</label>
+            <label><input type="checkbox" value="冷凍食品">冷凍食品</label>
+            <label><input type="checkbox" value="洋日配">洋日配</label>
+            <label><input type="checkbox" value="和日配">和日配</label>
+            <label><input type="checkbox" value="事務所">事務所</label>
+            <label><input type="checkbox" value="決済エリア">決済エリア</label>
+            <label><input type="checkbox" value="菓子">菓子</label>
+            <label><input type="checkbox" value="ハード">ハード</label>
+            <label><input type="checkbox" value="米">米</label>
+        </div>
+        <button id="logout-button" onclick="logout()">Logout</button>
+    </div>
+    
+    <!-- 主内容 -->
+    <main id="main-content">
+        <!-- 图片将被动态插入 -->
+    </main>
+    <!-- 脚本 -->
+    <script>
+  
+        // 将选择目录名显示功能于右上角
+            document.addEventListener('DOMContentLoaded', async () => {
+            const menu = document.getElementById('menu');
+            const currentDirectory = document.getElementById('current-directory');
+            const storeSelect = document.getElementById('shop-select');
+            const categoriesDiv = document.getElementById('categories');
+            const categoryCheckboxes = categoriesDiv.querySelectorAll('input[type="checkbox"]');
+            const urlParams = new URLSearchParams(window.location.search);
+            const username = urlParams.get('username');
+            const savedData = JSON.parse(localStorage.getItem('storeCategories')) || {};
+
+        // 初始化loacal商店选择
+        if (savedData.selectedStore) {
+    storeSelect.value = savedData.selectedStore;
+  }
+
+    // 初始化类别复选框
+    if (savedData.categories && savedData.categories[savedData.selectedStore]) {
+    const savedCategories = savedData.categories[savedData.selectedStore];
+    categoryCheckboxes.forEach(checkbox => {
+      checkbox.checked = savedCategories.includes(checkbox.value);
+    });
+  }
+
+        // 监听商店选择的变化
+        storeSelect.addEventListener('change', handleDataChange);
+      categoryCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', handleDataChange);
+      });
+
+      // 监听商店选择的变化
+      storeSelect.addEventListener('change', () => {
+    const selectedStore = storeSelect.value;
+    if (savedData.categories && savedData.categories[selectedStore]) {
+      const savedCategories = savedData.categories[selectedStore];
+      categoryCheckboxes.forEach(checkbox => {
+        checkbox.checked = savedCategories.includes(checkbox.value);
+      });
+    } else {
+      categoryCheckboxes.forEach(checkbox => {
+        checkbox.checked = false;
+      });
+    }
+    localSaveData();
+  });
+
+      // 监听类别复选框的变化
+      categoryCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', localSaveData);
+  });
+      
+
+    // 保存数据的函数
+    function localSaveData() {
+    const selectedStore = storeSelect.value;
+    const selectedCategories = Array.from(categoryCheckboxes)
+      .filter(checkbox => checkbox.checked)
+      .map(checkbox => checkbox.value);
+
+    savedData.selectedStore = selectedStore;
+    if (!savedData.categories) {
+      savedData.categories = {};
+    }
+    savedData.categories[selectedStore] = selectedCategories;
+
+    localStorage.setItem('storeCategories', JSON.stringify(savedData));
+  }
+
+        // 初始化商店选择
+        if (username) {
+        try {
+          const response = await fetch(`/getUserData?username=${encodeURIComponent(username)}`);
+          const data = await response.json();
+          if (data) {
+            loadUserData(data);
+          }
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      }
+
+      function handleDataChange() {
+        saveData();
+      }
+
+      function saveData() {
+        const selectedStore = storeSelect.value;
+        const selectedCategories = Array.from(categoryCheckboxes)
+          .filter(checkbox => checkbox.checked)
+          .map(checkbox => checkbox.value);
+
+        if (!username) return;
+
+        const data = {
+          username,
+          selectedStore,
+          selectedCategories
+        };
+
+        fetch('/saveUserData', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        }).then(response => response.text())
+          .then(data => console.log(data))
+          .catch(error => console.error('Error saving data:', error));
+      }
+
+      function loadUserData(data) {
+        storeSelect.value = data.selected_store;
+        const savedCategories = JSON.parse(data.selected_categories);
+
+        categoryCheckboxes.forEach(checkbox => {
+          checkbox.checked = savedCategories.includes(checkbox.value);
+        });
+      }
+
+      window.addEventListener('beforeunload', saveData);
+
+            menu.addEventListener('click', (event) => {
+                if (event.target.tagName === 'BUTTON' && event.target.id !== 'logout-button') {
+                    currentDirectory.textContent = event.target.textContent;
+                }
+            });         
+        });
+
+        const menuData = {
+            shop1: [
+                { url: 'seika1.jpg' },
+                { url: 'seika2.jpg' },
+                { url: 'seika3.jpg' },
+                { url: 'seika4.jpg' },
+                { url: 'seika5.jpg' },
+
+                // 更多图像数据
+            ],
+            shop2: [
+                { url: 'sushi1.jpg' },
+                { url: 'sushi2.jpg' },
+                { url: 'sushi3.jpg' },
+                // 更多图像数据
+            ],
+            shop3: [
+                { url: 'niku1.jpg' },
+                { url: 'niku2.jpg' },
+                { url: 'niku3.jpg' },
+                // 更多图像数据
+            ],
+            shop4: [
+                { url: 'saozai1.jpg' },
+                { url: 'saozai2.jpg' },
+                { url: 'saozai3.jpg' },
+                { url: 'saozai4.jpg' },
+
+                // 更多图像数据
+            ],
+            shop5: [
+                { url: 'sakei1.jpg' },
+                { url: 'sakei2.jpg' },
+                // 更多图像数据
+            ],
+            shop6: [
+                { url: 'gurosari1.jpg' },
+                // 更多图像数据
+            ],
+            shop7: [
+                { url: 'noimage.jpg' },
+
+                // 更多图像数据
+            ],
+            shop8: [
+                { url: 'shoumao1.jpg' },
+          
+                // 更多图像数据
+            ],
+            shop9: [
+                { url: 'noimage.jpg' },
+                // 更多图像数据
+            ],
+            shop10: [
+                { url: 'noimage.jpg' },
+                // 更多图像数据
+            ],
+            shop11: [
+            { url: 'noimage.jpg' },
+                // 更多图像数据
+            ],
+            shop12: [
+                { url: 'kagoniku1.jpg' },
+                // 更多图像数据
+            ],
+            shop13: [
+                { url: 'redou1.jpg' },
+                { url: 'redou2.jpg' },
+                // 更多图像数据
+            ],
+            shop14: [
+                { url: 'you1.jpg' },
+                { url: 'you2.jpg' },
+                // 更多图像数据
+            ],
+            shop15: [
+                { url: 'wa.jpg' },
+                { url: 'wa1.jpg' },
+                
+                // 更多图像数据
+            ],
+            shop16: [
+                { url: 'jimu1.jpg' },
+                { url: 'jimu2.jpg' },
+                // 更多图像数据
+            ],
+            shop17: [
+                { url: 'noimage.jpg' },
+                // 更多图像数据
+            ],
+            shop18: [
+                { url: 'noimage.jpg' },
+                // 更多图像数据
+            ],
+            shop19: [
+                { url: 'noimage.jpg' },
+                // 更多图像数据
+            ],
+            shop20: [
+                { url: 'mi1.jpg' },
+                // 更多图像数据
+            ]
+        };
+
+//按下图标显示所对应的图像
+        function showImages(shop) {
+            const container = document.getElementById('main-content');
+            container.innerHTML = ''; // 清空之前的图像
+
+            menuData[shop].forEach(item => {
+                const img = document.createElement('img');
+                img.src = item.url;
+                container.appendChild(img);
+            });
+        }
+
+// 退出按钮功能
+function logout() {
+    window.location.href = 'http://127.0.0.1:8080/index.html';
+   // alert('Logout successful!');
+}
+//菜单栏显示，关闭功能
+function toggleMenu() {
+    const menu = document.getElementById('menu');
+    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+}
+
+window.onload = function () {
+    const countdown = document.getElementById('countdown');
+    const mainContent = document.getElementById('main-content');
+    const urlParams = new URLSearchParams(window.location.search);
+    const username = urlParams.get('username');
+
+    // 示例图片列表，可以动态生成
+    const images = [
+        'noimage.jpg',
+    ];
+
+    images.forEach(src => {
+        const img = document.createElement('img');
+        img.src = src;
+        mainContent.appendChild(img);
+    });
+
+    // 倒计时功能
+
+    let currentIndex = 0;
+        const buttons = document.querySelectorAll('.menu-button');
+        const checkboxes = document.querySelectorAll('#categories input[type="checkbox"]');
+
+        setInterval(() => {
+            // Get the list of checked checkboxes
+            const checkedValues = Array.from(checkboxes)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.value);
+
+            // Skip if no checkboxes are selected
+            if (checkedValues.length === 0) return;
+
+            // Find the next button to click
+            const nextButton = Array.from(buttons).find(button => button.textContent === checkedValues[currentIndex]);
+
+            if (nextButton) {
+                nextButton.click();
+            }
+
+            // Move to the next checkbox in the list
+            currentIndex = (currentIndex + 1) % checkedValues.length;
+        }, 2000);
+
+};
+    </script>
+    
+
+</body>
+</html>

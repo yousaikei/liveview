@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Index Page</title>
+  <h1 id="welcomeMessage">欢迎访问</h1>
+</head>
+<body>
+  <label for="store">店舗を選択:</label>
+  <select id="store">
+    <option value="store1">店舗1</option>
+    <option value="store2">店舗2</option>
+    <option value="store3">店舗3</option>
+  </select>
+
+  <div id="categories">
+    <label><input type="checkbox" value="cat1">カテゴリー1</label>
+    <label><input type="checkbox" value="cat2">カテゴリー2</label>
+    <label><input type="checkbox" value="cat3">カテゴリー3</label>
+  </div>
+
+  <script>
+    window.onload = async function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const username = urlParams.get('username');
+      const welcomeMessageElement = document.getElementById('welcomeMessage');
+
+      if (welcomeMessageElement && username) {
+        const safeUsername = document.createTextNode(username).textContent;
+        welcomeMessageElement.textContent = `你好，${safeUsername}`;
+      } else if (welcomeMessageElement) {
+        welcomeMessageElement.textContent = '欢迎访问';
+      }
+
+      // Fetch user data from MySQL
+      if (username) {
+        try {
+          const response = await fetch(`/getUserData?username=${encodeURIComponent(username)}`);
+          const data = await response.json();
+          if (data) {
+            loadUserData(data);
+          }
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const storeSelect = document.getElementById('store');
+      const categoriesDiv = document.getElementById('categories');
+      const categoryCheckboxes = categoriesDiv.querySelectorAll('input[type="checkbox"]');
+
+      // 监听商店选择的变化
+      storeSelect.addEventListener('change', saveData);
+      // 监听类别复选框的变化
+      categoryCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', saveData);
+      });
+
+      // Save data function
+      function saveData() {
+        const selectedStore = storeSelect.value;
+        const selectedCategories = Array.from(categoryCheckboxes)
+          .filter(checkbox => checkbox.checked)
+          .map(checkbox => checkbox.value);
+
+        const username = new URLSearchParams(window.location.search).get('username');
+        if (!username) return;
+
+        const data = {
+          username,
+          selectedStore,
+          selectedCategories
+        };
+
+        fetch('/saveUserData', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        }).then(response => response.text())
+          .then(data => console.log(data))
+          .catch(error => console.error('Error saving data:', error));
+      }
+
+      function loadUserData(data) {
+        storeSelect.value = data.selected_store;
+        const savedCategories = JSON.parse(data.selected_categories);
+
+        categoryCheckboxes.forEach(checkbox => {
+          checkbox.checked = savedCategories.includes(checkbox.value);
+        });
+      }
+    });
+
+    window.addEventListener('beforeunload', saveData);
+  </script>
+</body>
+</html>

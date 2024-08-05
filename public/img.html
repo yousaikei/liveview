@@ -79,127 +79,95 @@
                 // 更多图像数据
             ],
             shop2: [
-                { url: 'img3.jpg' },
-                { url: 'img4.jpg' },
+                { url: 'sushi1.jpg' },
+                { url: 'sushi2.jpg' },
+                { url: 'sushi3.jpg' },
                 // 更多图像数据
             ],
             shop3: [
-                { url: 'img3.jpg' },
-                { url: 'img4.jpg' },
-                { url: 'img2.jpg' },
+                { url: 'niku1.jpg' },
+                { url: 'niku2.jpg' },
+                { url: 'niku3.jpg' },
                 // 更多图像数据
             ],
             shop4: [
-                { url: 'img1.jpg' },
-                { url: 'img4.jpg' },
+                { url: 'saozai1.jpg' },
+                { url: 'saozai2.jpg' },
+                { url: 'saozai3.jpg' },
+                { url: 'saozai4.jpg' },
+
                 // 更多图像数据
             ],
             shop5: [
-                { url: 'img3.jpg' },
-                { url: 'img4.jpg' },
-                { url: 'img2.jpg' },
-                { url: 'img1.jpg' },
+                { url: 'sakei1.jpg' },
+                { url: 'sakei2.jpg' },
                 // 更多图像数据
             ],
             shop6: [
-                { url: 'img3.jpg' },
-                { url: 'img2.jpg' },
-                { url: 'img1.jpg' },
-                { url: 'img4.jpg' },
-                { url: 'img5.jpg' },
-                
-      
+                { url: 'gurosari1.jpg' },
                 // 更多图像数据
             ],
             shop7: [
-                { url: 'img3.jpg' },
-                { url: 'img4.jpg' },
-                { url: 'img6.jpg' },
-                { url: 'img5.jpg' },
-                { url: 'img2.jpg' },
-                { url: 'img1.jpg' },
+                { url: 'noimage.jpg' },
+
                 // 更多图像数据
             ],
             shop8: [
-                { url: 'img3.jpg' },
-                { url: 'img4.jpg' },
-                { url: 'img7.jpg' },
-                { url: 'img6.jpg' },
-                { url: 'img5.jpg' },
-                { url: 'img2.jpg' },
-                { url: 'img1.jpg' },
+                { url: 'shoumao1.jpg' },
+          
                 // 更多图像数据
             ],
             shop9: [
-                { url: 'img4.jpg' },
+                { url: 'noimage.jpg' },
                 // 更多图像数据
             ],
             shop10: [
-                { url: 'img3.jpg' },
-                { url: 'img4.jpg' },
-                { url: 'img2.jpg' },
+                { url: 'noimage.jpg' },
                 // 更多图像数据
             ],
             shop11: [
-                { url: 'img3.jpg' },
-                { url: 'img4.jpg' },
-                { url: 'img2.jpg' },
+            { url: 'noimage.jpg' },
                 // 更多图像数据
             ],
             shop12: [
-                { url: 'img3.jpg' },
-                { url: 'img4.jpg' },
-                { url: 'img2.jpg' },
-                { url: 'img1.jpg' },
-                { url: 'img5.jpg' },
+                { url: 'kagoniku1.jpg' },
                 // 更多图像数据
             ],
             shop13: [
-                { url: 'img3.jpg' },
-                { url: 'img4.jpg' },
-                { url: 'img2.jpg' },
+                { url: 'redou1.jpg' },
+                { url: 'redou2.jpg' },
                 // 更多图像数据
             ],
             shop14: [
-                { url: 'img3.jpg' },
-                { url: 'img4.jpg' },
-                { url: 'img2.jpg' },
-                { url: 'img1.jpg' },
+                { url: 'you1.jpg' },
+                { url: 'you2.jpg' },
                 // 更多图像数据
             ],
             shop15: [
-                { url: 'img3.jpg' },
-                { url: 'img4.jpg' },
-                { url: 'img5.jpg' },
+                { url: 'wa.jpg' },
+                { url: 'wa1.jpg' },
                 
                 // 更多图像数据
             ],
             shop16: [
-                { url: 'img3.jpg' },
-                { url: 'img4.jpg' },
-                { url: 'img7.jpg' },
-                { url: 'img6.jpg' },
-                { url: 'img5.jpg' },
+                { url: 'jimu1.jpg' },
+                { url: 'jimu2.jpg' },
                 // 更多图像数据
             ],
             shop17: [
-                { url: 'img3.jpg' },
-
+                { url: 'noimage.jpg' },
                 // 更多图像数据
             ],
             shop18: [
-                { url: 'img1.jpg' },
-                { url: 'img4.jpg' },
+                { url: 'noimage.jpg' },
                 // 更多图像数据
             ],
             shop19: [
-                { url: 'img2.jpg' },
-                { url: 'img4.jpg' },
+                { url: 'noimage.jpg' },
                 // 更多图像数据
             ],
             shop20: [
-                { url: 'img3.jpg' },
-                { url: 'img4.jpg' },
+                { url: 'mi1.jpg' },
                 // 更多图像数据
             ]
         };
@@ -251,13 +219,7 @@ window.onload = function () {
 
     // 示例图片列表，可以动态生成
     const images = [
-        'img1.jpg',
-        'img2.jpg',
-        'img3.jpg',
-        'img4.jpg',
-        'img5.jpg',
-        'img6.jpg',
-        'img7.jpg',
+        'noimage.jpg',
     ];
 
     const mainContent = document.getElementById('main-content');
@@ -269,7 +231,7 @@ window.onload = function () {
 
     // 图片轮播功能
     let currentIndex = 0;
-    const displayTime = 10000; // 每张图片显示时间（毫秒）
+    const displayTime = 8000; // 每张图片显示时间（毫秒）
     setInterval(() => {
         const imgs = document.querySelectorAll('#main-content img');
         imgs.forEach((img, index) => {

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>店舗とカテゴリーの選択</title>
+</head>
+<body>
+  <label for="store">店舗を選択:</label>
+  <select id="store">
+    <option value="store1">店舗1</option>
+    <option value="store2">店舗2</option>
+    <option value="store3">店舗3</option>
+  </select>
+
+  <div id="categories">
+    <label><input type="checkbox" value="cat1">カテゴリー1</label>
+    <label><input type="checkbox" value="cat2">カテゴリー2</label>
+    <label><input type="checkbox" value="cat3">カテゴリー3</label>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+  const storeSelect = document.getElementById('store');
+  const categoriesDiv = document.getElementById('categories');
+  const categoryCheckboxes = categoriesDiv.querySelectorAll('input[type="checkbox"]');
+
+  // 从本地存储中读取数据
+  const savedData = JSON.parse(localStorage.getItem('storeCategories')) || {};
+
+  // 初始化商店选择
+  if (savedData.selectedStore) {
+    storeSelect.value = savedData.selectedStore;
+  }
+
+  // 初始化类别复选框
+  if (savedData.categories && savedData.categories[savedData.selectedStore]) {
+    const savedCategories = savedData.categories[savedData.selectedStore];
+    categoryCheckboxes.forEach(checkbox => {
+      checkbox.checked = savedCategories.includes(checkbox.value);
+    });
+  }
+
+  // 监听商店选择的变化
+  storeSelect.addEventListener('change', () => {
+    const selectedStore = storeSelect.value;
+    if (savedData.categories && savedData.categories[selectedStore]) {
+      const savedCategories = savedData.categories[selectedStore];
+      categoryCheckboxes.forEach(checkbox => {
+        checkbox.checked = savedCategories.includes(checkbox.value);
+      });
+    } else {
+      categoryCheckboxes.forEach(checkbox => {
+        checkbox.checked = false;
+      });
+    }
+    saveData();
+  });
+
+  // 监听类别复选框的变化
+  categoryCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', saveData);
+  });
+
+  // 保存数据的函数
+  function saveData() {
+    const selectedStore = storeSelect.value;
+    const selectedCategories = Array.from(categoryCheckboxes)
+      .filter(checkbox => checkbox.checked)
+      .map(checkbox => checkbox.value);
+
+    savedData.selectedStore = selectedStore;
+    if (!savedData.categories) {
+      savedData.categories = {};
+    }
+    savedData.categories[selectedStore] = selectedCategories;
+
+    localStorage.setItem('storeCategories', JSON.stringify(savedData));
+  }
+});
+
+  </script>
+</body>
+</html>

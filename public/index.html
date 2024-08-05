@@ -74,9 +74,11 @@ button:hover {
       const result = await response.json();//获取返回的json数据
 
       if (result.success) {
-        alert('Login successful!');
+
+     //   alert('Login successful!');
         // 例如，重定向到主页
-        window.location.href = 'http://127.0.0.1:8080/img.html';
+        window.location.href = result.redirectUrl;
+       // window.location.href = 'http://127.0.0.1:8080/page1.html';
       } else {
         alert('Login failed: ' + result.message);
       }
